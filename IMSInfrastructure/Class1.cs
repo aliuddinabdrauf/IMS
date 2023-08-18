@@ -1,4 +1,4 @@
-﻿namespace IMSInfrastructure;
+﻿    namespace IMSInfrastructure;
 
 public class Class1
 {
