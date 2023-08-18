@@ -19,4 +19,9 @@
       </Content>
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\IMSApplication\IMSApplication.csproj" />
+      <ProjectReference Include="..\IMSInfrastructure\IMSInfrastructure.csproj" />
+    </ItemGroup>
+
 </Project>
