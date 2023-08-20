@@ -3,6 +3,7 @@ using System;
 using IMSInfrastructure.DbContext.IMS;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NodaTime;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
@@ -12,16 +13,17 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace IMSInfrastructure.Migrations
 {
     [DbContext(typeof(ImsContext))]
-    partial class ImsContextModelSnapshot : ModelSnapshot
+    [Migration("20230820084507_tblStudent")]
+    partial class tblStudent
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "7.0.10")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
-            NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "user_gender", new[] { "male", "female" });
             NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "user_role", new[] { "user", "admin" });
             NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "user_status", new[] { "need_activation", "active", "disabled" });
             NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "user_type", new[] { "student", "staff", "industry" });
@@ -37,10 +39,6 @@ namespace IMSInfrastructure.Migrations
                     b.Property<Instant>("CreateTime")
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("create_time");
-
-                    b.Property<int>("Gender")
-                        .HasColumnType("user_gender")
-                        .HasColumnName("gender");
 
                     b.Property<string>("Name")
                         .IsRequired()

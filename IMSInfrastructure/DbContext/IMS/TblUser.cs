@@ -18,24 +18,5 @@ public class TblUser:TblBase
     public UserStatus Status { get; set; }
     [Column(TypeName = "user_type")]
     public UserType Type { get; set; }
-}
-
-public enum UserRole
-{
-    User,
-    Admin
-}
-
-public enum UserType
-{
-    Student,
-    Staff,
-    Industry
-}
-
-public enum UserStatus
-{
-    NeedActivation,
-    Active,
-    Disabled
+    public TblStudent Student { get; set; }
 }

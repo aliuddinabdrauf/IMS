@@ -14,6 +14,7 @@ public class ImsContext : DbContext
     }
     
     public virtual DbSet<TblUser> TblUser { get; set; }
+    public virtual DbSet<TblStudent> TblStudent { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -29,6 +30,7 @@ public class ImsContext : DbContext
         modelBuilder
             .HasPostgresEnum<UserRole>()
             .HasPostgresEnum<UserStatus>()
-            .HasPostgresEnum<UserType>();
+            .HasPostgresEnum<UserType>()
+            .HasPostgresEnum<UserGender>();
     }
 }

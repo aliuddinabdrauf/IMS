@@ -16,6 +16,7 @@ dataSourceBuilder.UseNodaTime();
 dataSourceBuilder.MapEnum<UserRole>();
 dataSourceBuilder.MapEnum<UserStatus>();
 dataSourceBuilder.MapEnum<UserType>();
+dataSourceBuilder.MapEnum<UserGender>();
 var dataSource = dataSourceBuilder.Build();
 builder.Services.AddDbContext<ImsContext>(options =>
 {
