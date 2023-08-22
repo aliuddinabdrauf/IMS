@@ -3,6 +3,7 @@ using System;
 using IMSInfrastructure.DbContext.IMS;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NodaTime;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
@@ -12,9 +13,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace IMSInfrastructure.Migrations
 {
     [DbContext(typeof(ImsContext))]
-    partial class ImsContextModelSnapshot : ModelSnapshot
+    [Migration("20230821113435_addtblstaff")]
+    partial class addtblstaff
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -138,15 +141,10 @@ namespace IMSInfrastructure.Migrations
                         .HasColumnType("varchar(200)")
                         .HasColumnName("email");
 
-                    b.Property<string>("PasswordHash")
+                    b.Property<string>("Password")
                         .IsRequired()
                         .HasColumnType("Text")
-                        .HasColumnName("password_hash");
-
-                    b.Property<string>("PasswordSalt")
-                        .IsRequired()
-                        .HasColumnType("Text")
-                        .HasColumnName("password_salt");
+                        .HasColumnName("password");
 
                     b.Property<string>("PhoneNo")
                         .HasColumnType("varchar(12)")
