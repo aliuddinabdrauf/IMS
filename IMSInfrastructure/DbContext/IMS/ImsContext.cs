@@ -15,6 +15,8 @@ public class ImsContext : DbContext
     
     public virtual DbSet<TblUser> TblUser { get; set; }
     public virtual DbSet<TblStudent> TblStudent { get; set; }
+    public virtual DbSet<TblStaff> TblStaff { get; set; }
+    public virtual DbSet<TblIndustry> TblIndustry { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
