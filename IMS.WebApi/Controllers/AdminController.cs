@@ -1,12 +1,13 @@
+using IMS.Application.Services;
+using IMS.Infrastructure.Dto;
 using Microsoft.AspNetCore.Mvc;
 
-namespace IMS.Controllers;
+namespace IMS.WebApi.Controllers;
 
-public class AdminController : Controller
+[ApiController]
+[Route("api/admin")]
+public class AdminController(IStudentService studentService, IFacultyService facultyService, ICourseService courseService) : ControllerBase
 {
-    // GET
-    public IActionResult Index()
-    {
-        return View();
-    }
+
+    
 }

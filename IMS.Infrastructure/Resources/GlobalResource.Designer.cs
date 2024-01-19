@@ -44,5 +44,47 @@ namespace IMS.Infrastructure.Resources {
                 resourceCulture = value;
             }
         }
+        
+        internal static string RecordNotFound {
+            get {
+                return ResourceManager.GetString("RecordNotFound", resourceCulture);
+            }
+        }
+        
+        internal static string NoValidAction {
+            get {
+                return ResourceManager.GetString("NoValidAction", resourceCulture);
+            }
+        }
+        
+        internal static string EmailOrPasswordNotValid {
+            get {
+                return ResourceManager.GetString("EmailOrPasswordNotValid", resourceCulture);
+            }
+        }
+        
+        internal static string ResetPasswordExpired {
+            get {
+                return ResourceManager.GetString("ResetPasswordExpired", resourceCulture);
+            }
+        }
+        
+        internal static string RequestResetPassword {
+            get {
+                return ResourceManager.GetString("RequestResetPassword", resourceCulture);
+            }
+        }
+        
+        internal static string NotAuthenticated {
+            get {
+                return ResourceManager.GetString("NotAuthenticated", resourceCulture);
+            }
+        }
+        
+        internal static string NotAuthorized {
+            get {
+                return ResourceManager.GetString("NotAuthorized", resourceCulture);
+            }
+        }
     }
 }

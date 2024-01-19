@@ -5,13 +5,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace IMS.Application.Repositories;
 
-public interface ICourseRepositories
+public interface ICourseRepository
 {
     Task<CourseDto> CreateCourse(CourseDto course);
     Task<List<CourseComprehensiveInfoDto>> GetAllCourseDetails();
 }
 
-public class CourseRepository(ImsContext context) : ICourseRepositories
+public class CourseRepository(ImsContext context) : ICourseRepository
 {
     private readonly ImsContext _context = context;
 

@@ -1,13 +1,14 @@
 using System.ComponentModel.DataAnnotations;
+using Mapster;
 using Microsoft.EntityFrameworkCore;
 using NodaTime;
 
 namespace IMS.Infrastructure.DbContext.IMS;
 
-public class TblBase
+public partial class TblBase
 {
     [Key]
     public Guid Id { get; set; } = Guid.NewGuid();
-    public Instant CreateTime { get; set; } = SystemClock.Instance.GetCurrentInstant();
-    public Instant UpdateTime { get; set; } = SystemClock.Instance.GetCurrentInstant();
+    public Instant TimestampCreated { get; init; } = SystemClock.Instance.GetCurrentInstant();
+    public Instant TimestampUpdated { get; init; } = SystemClock.Instance.GetCurrentInstant();
 }

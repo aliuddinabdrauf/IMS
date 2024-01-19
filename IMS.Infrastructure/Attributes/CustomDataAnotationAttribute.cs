@@ -1,7 +1,8 @@
 using System.Collections;
 using System.ComponentModel.DataAnnotations;
+using IMS.Infrastructure.Util;
 
-namespace IMS.Infrastructure.Util;
+namespace IMS.Infrastructure.Attributes;
 
 public class StringArrayLengthAttribute : ValidationAttribute
 {

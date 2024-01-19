@@ -8,18 +8,35 @@ using Microsoft.Extensions.Localization;
 
 namespace IMS.Application.Repositories;
 
-public interface IStudentRepositories
+public interface IStudentRepository
 {
     Task<StudentDto> CreateStudent(StudentDto student);
     Task MapStudentToCourses(Guid studentId, Guid[] courseIds);
     Task<StudentComprehensiveDetailsDto> GetStudentDetailsById(Guid id);
+    Task<StudentDto> GetStudentByUserId(Guid userId);
+    Task<Guid> GetStudentIdByUserId(Guid userId);
 }
 
-public class StudentRepository(ImsContext context, IStringLocalizer<GlobalResource> globalResource) : IStudentRepositories
+public class StudentRepository(ImsContext context, IStringLocalizer<GlobalResource> globalResource) : IStudentRepository
 {
     private readonly ImsContext _context = context;
     private readonly IStringLocalizer<GlobalResource> _stringLocalizer = globalResource;
 
+    public async Task<StudentDto> GetStudentByUserId(Guid userId)
+    {
+        var result = await _context.TblStudents.SingleOrDefaultAsync(o => o.UserId == userId);
+        if (result == null)
+            throw new RecordNotFoundException(_stringLocalizer["RecordNotFound"]);
+        return result.Adapt<StudentDto>();
+    }
+    
+    public async Task<Guid> GetStudentIdByUserId(Guid userId)
+    {
+        var result = await _context.TblStudents.Select(o => new{o.UserId, o.Id}).SingleOrDefaultAsync(o => o.UserId == userId);
+        if (result == null)
+            throw new RecordNotFoundException(_stringLocalizer["RecordNotFound"]);
+        return result.Id;
+    }
     public async Task<StudentDto> CreateStudent(StudentDto student)
     {
        var result = await _context.TblStudents.AddAsync(student.Adapt<TblStudent>());

@@ -19,6 +19,24 @@
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
     <data name="RecordNotFound" xml:space="preserve">
-        <value>rekod tidak dijumpai</value>
+        <value>Rekod tidak dijumpai.</value>
+    </data>
+    <data name="NoValidAction" xml:space="preserve">
+        <value>Tiada tindakan yang sah.</value>
+    </data>
+    <data name="EmailOrPasswordNotValid" xml:space="preserve">
+        <value>Emel atau kata laluan tidak sah. Sila cuba sekali lagi.</value>
+    </data>
+    <data name="ResetPasswordExpired" xml:space="preserve">
+        <value>Pautan untuk menetap semula kata laluan telah tamat tempoh.</value>
+    </data>
+    <data name="RequestResetPassword" xml:space="preserve">
+        <value>Emel akan dihantar ke alamat emel anda yang berdaftar untuk langkah seterusnya bagi penetapan semula kata laluan.</value>
+    </data>
+    <data name="NotAuthenticated" xml:space="preserve">
+        <value>Anda tidak mendaftar masuk.</value>
+    </data>
+    <data name="NotAuthorized" xml:space="preserve">
+        <value>Anda tiada akses untuk mengambil tindakan ini.</value>
     </data>
 </root>

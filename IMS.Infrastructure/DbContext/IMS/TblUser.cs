@@ -1,25 +1,28 @@
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
 namespace IMS.Infrastructure.DbContext.IMS;
 
-[Index(nameof(Email), IsUnique = true)]
-public class TblUser:TblBase
+public partial class TblUser:TblBase
 {
-    [Column(TypeName = "varchar(200)")]
-    public string Email { get; set; }
-    [Column(TypeName = "Text")]
-    public string PasswordHash { get; set; }
-    [Column(TypeName = "Text")]
-    public string PasswordSalt { get; set; }
-    [Column(TypeName = "varchar(12)")]
-    public string? PhoneNo { get; set; }
-    [Column(TypeName = "user_role[]")]
-    public UserRole[] Roles { get; set; } = Array.Empty<UserRole>();
-    [Column(TypeName = "user_status")]
+    private string _emailAddress = null!;
+    [Required]
+    [EmailAddress]
+    [StringLength(100)]
+    public string EmailAddress {
+        get => _emailAddress;
+        set => _emailAddress = value.ToLowerInvariant();
+    }
+    [StringLength(200)]
+    public string? PasswordHash { get; set; }
+    [StringLength(100)]
+    public string? PasswordSalt { get; set; }
+    public UserRole[] Roles { get; set; } = [];
     public UserStatus Status { get; set; }
-    [Column(TypeName = "user_type")]
-    public UserType Type { get; set; }
-    public TblStudent Student { get; set; }
-    public TblStaff Staff { get; set; }
+    public AccountType Type { get; set; }
+    public TblStudent? Student { get; set; }
+    public TblStaff? Staff { get; set; }
+    public virtual ICollection<TblResetPassword> ResetPasswords { get; set; } = [];
+    public virtual ICollection<TblLoginSession> LoginSessions { get; set; } = [];
 }

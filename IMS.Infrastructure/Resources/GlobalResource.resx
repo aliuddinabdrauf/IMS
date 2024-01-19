@@ -18,4 +18,25 @@
     <resheader name="writer">
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
+    <data name="RecordNotFound" xml:space="preserve">
+        <value>Record not found.</value>
+    </data>
+    <data name="NoValidAction" xml:space="preserve">
+        <value>No valid action.</value>
+    </data>
+    <data name="EmailOrPasswordNotValid" xml:space="preserve">
+        <value>Email or password is not valid. Please try again.</value>
+    </data>
+    <data name="ResetPasswordExpired" xml:space="preserve">
+        <value>This link to reset password already expired.</value>
+    </data>
+    <data name="RequestResetPassword" xml:space="preserve">
+        <value>Email will be send to your registered email address for the next step to reset your password.</value>
+    </data>
+    <data name="NotAuthenticated" xml:space="preserve">
+        <value>You're not logged in.</value>
+    </data>
+    <data name="NotAuthorized" xml:space="preserve">
+        <value>You do not have access to do this action</value>
+    </data>
 </root>

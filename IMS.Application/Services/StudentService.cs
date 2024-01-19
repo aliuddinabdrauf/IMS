@@ -6,20 +6,20 @@ using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace IMS.Application.Services;
 
-public interface IStudentServices
+public interface IStudentService
 {
     Task<StudentComprehensiveDetailsDto> GetStudentDetailsById(Guid id);
 }
 
-public class StudentService(IUnitOfWork unitOfWork, IAuthenticationServices authenticationServices, IEmailServices emailServices) : IStudentServices
+public class StudentService(IUnitOfWork unitOfWork, IAuthenticationService authenticationService, IEmailService emailService) : IStudentService
 {
     private readonly IUnitOfWork _unitOfWork = unitOfWork;
-    private readonly IAuthenticationServices _authenticationServices = authenticationServices;
-    private readonly IEmailServices _emailServices = emailServices;
+    private readonly IAuthenticationService _authenticationService = authenticationService;
+    private readonly IEmailService _emailService = emailService;
 
     public async Task<StudentComprehensiveDetailsDto> GetStudentDetailsById(Guid id)
     {
-        var result = await _unitOfWork.StudentRepositories.GetStudentDetailsById(id);
+        var result = await _unitOfWork.StudentRepository.GetStudentDetailsById(id);
         return result;
     }
 }

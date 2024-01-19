@@ -1,12 +1,20 @@
+using IMS.Application.Services;
+using IMS.Infrastructure.Dto;
 using Microsoft.AspNetCore.Mvc;
 
 namespace IMS.WebApi.Controllers;
-
-public class StudentController : Controller
+[ApiController]
+[Route("api/student")]
+public class StudentController(IStudentService studentService) : ControllerBase
 {
-    // GET
-    public IActionResult Index()
+    private readonly IStudentService _studentService = studentService;
+    
+    [HttpGet]
+    [Route("details/{id}")]
+    [ProducesResponseType<StudentComprehensiveDetailsDto>(200)]
+    public async Task<IActionResult> GetStudentDetailsById(Guid id)
     {
-        return View();
+        var result = await _studentService.GetStudentDetailsById(id);
+        return Ok(result);
     }
 }

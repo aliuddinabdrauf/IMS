@@ -4,12 +4,12 @@ using Mapster;
 
 namespace IMS.Application.Repositories;
 
-public interface IEmailRepositories
+public interface IEmailRepository
 {
     Task<EmailDto> CreateNewEmail(EmailDto email);
 }
 
-public class EmailRepository(ImsContext imsContext) : IEmailRepositories
+public class EmailRepository(ImsContext imsContext) : IEmailRepository
 {
     private readonly ImsContext _imsContext = imsContext;
 

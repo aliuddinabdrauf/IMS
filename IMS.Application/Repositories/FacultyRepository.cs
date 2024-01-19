@@ -4,12 +4,12 @@ using Mapster;
 
 namespace IMS.Application.Repositories;
 
-public interface IFacultyRepositories
+public interface IFacultyRepository
 {
     Task<FacultyDto> CreateFaculty(FacultyDto faculty);
 }
 
-public class FacultyRepository(ImsContext context) : IFacultyRepositories
+public class FacultyRepository(ImsContext context) : IFacultyRepository
 {
     private readonly ImsContext _context = context;
 
