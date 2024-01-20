@@ -35,6 +35,8 @@ public class JwtMiddleware(RequestDelegate next, IOptions<JwtSettings> jwtSettin
             {
                 ValidateIssuerSigningKey = true,
                 IssuerSigningKey = new SymmetricSecurityKey(key),
+                ValidIssuer = _jwtSettings.Issuer,
+                ValidAudience = _jwtSettings.Audience,
                 ValidateIssuer = true,
                 ValidateAudience = true,
                 // set clock skew to zero so tokens expire exactly at token expiration time (instead of 5 minutes later)

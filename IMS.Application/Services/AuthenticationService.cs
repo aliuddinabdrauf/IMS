@@ -130,7 +130,7 @@ public class AuthenticationService(IStringLocalizer<GlobalResource> globalResour
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
             var sessionId = await CreateLoginSession(user.Id.GetValueOrDefault(), tokenDescriptor);
-            tokenDescriptor.Subject.AddClaim(new Claim(type:"sessionId", sessionId.ToString()!));
+            tokenDescriptor.Subject.AddClaim(new Claim(type:"sessionId", sessionId.Id.ToString()!));
             return tokenHandler.CreateToken(tokenDescriptor);
         });
         return tokenHandler.WriteToken(token);

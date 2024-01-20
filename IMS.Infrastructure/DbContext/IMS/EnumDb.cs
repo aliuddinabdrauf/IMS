@@ -9,6 +9,7 @@ public enum UserRole
 
 public enum AccountType
 {
+    All = 0,
     Student = 1,
     Staff = 2,
     Industry = 3

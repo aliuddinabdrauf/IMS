@@ -18,7 +18,7 @@ public class AuthenticateController(IAuthenticationService authenticationService
     private readonly IUserService _userService = userService;
     [HttpGet]
     [Route("resetpassword/request")]
-    public async Task<IActionResult> ResetPasswordRequest([EmailAddress]string emailAddress)
+    public async Task<IActionResult> ResetPasswordRequest([EmailAddress][Required]string emailAddress)
     {
         //even if email not found, just return success
         try

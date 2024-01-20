@@ -27,7 +27,7 @@ public class AuthenticationRepository(ImsContext context,IStringLocalizer<Global
     {
         var toSave = resetPassword.Adapt<TblResetPassword>();
         var result = await _imsContext.TblResetPasswords.AddAsync(toSave);
-        return result.Adapt<ResetPasswordDto>();
+        return result.Entity.Adapt<ResetPasswordDto>();
     }
 
     public async Task<ResetPasswordToValidateDto> GetResetPasswordDetailsToValidate(Guid id, string resetKey)
@@ -53,13 +53,13 @@ public class AuthenticationRepository(ImsContext context,IStringLocalizer<Global
     {
         var toSave = loginSession.Adapt<TblLoginSession>();
         var result = await _imsContext.TblLoginSessions.AddAsync(toSave);
-        return result.Adapt<LoginSessionDto>();
+        return result.Entity.Adapt<LoginSessionDto>();
     }
 
     public async Task<int> UpdateLoginSession_E(Guid sessionId)
     {
         return await _imsContext.TblLoginSessions
-            .Where(o => o.Id == sessionId && o.TimestampEnd < SystemClock.Instance.GetCurrentInstant())
+            .Where(o => o.Id == sessionId && o.TimestampEnd > SystemClock.Instance.GetCurrentInstant())
             .ExecuteUpdateAsync(o =>
             o.SetProperty(p => p.TimestampLatestActivity, SystemClock.Instance.GetCurrentInstant()));
     }

@@ -7,7 +7,7 @@ namespace IMS.Application.Middlewares;
 
 public class ErrorHandlingMiddleware(RequestDelegate next)
 {
-    public async Task Invoke(HttpContext context)
+    public async Task InvokeAsync(HttpContext context)
     {
         try
         {
