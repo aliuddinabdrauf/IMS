@@ -28,3 +28,8 @@ public enum UserGender
     Male = 1,
     Female = 2
 }
+
+public enum FileType{
+    Image = 1,
+    Document = 2
+}

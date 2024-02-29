@@ -24,6 +24,8 @@ public partial class ImsContext : DbContext
     public virtual DbSet<TblResetPassword> TblResetPasswords { get; set; }
     public virtual DbSet<TblEmail> TblEmails { get; set; }
     public virtual DbSet<TblLoginSession> TblLoginSessions { get; set; }
+    public virtual DbSet<TblFile> TblFiles {get; set;}
+    public virtual DbSet<TblFileDetail> TblFileDetails {get ;set;}
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -41,7 +43,8 @@ public partial class ImsContext : DbContext
             .HasPostgresEnum<UserRole>()
             .HasPostgresEnum<UserStatus>()
             .HasPostgresEnum<AccountType>()
-            .HasPostgresEnum<UserGender>();
+            .HasPostgresEnum<UserGender>()
+            .HasPostgresEnum<FileType>();
         
         //model entity configuration
         modelBuilder.Entity<TblBase>(entity =>
@@ -71,6 +74,10 @@ public partial class ImsContext : DbContext
                 .HasColumnType("account_type");
             entity.Property(e => e.Status)
                 .HasColumnType("user_status");
+
+            entity.HasOne(d => d.ProfilePitcureFile).WithOne(p => p.User)
+                .HasForeignKey<TblUser>(d =>d.ProfilePicture)
+                .OnDelete(DeleteBehavior.NoAction);
 
             entity.HasIndex(e => new { e.EmailAddress }).IsUnique();
         });
@@ -208,6 +215,26 @@ public partial class ImsContext : DbContext
             entity.Property(e => e.Sender)
                 .HasMaxLength(100);
             entity.HasIndex(e => new { e.ReferenceId });
+        });
+
+        modelBuilder.Entity<TblFile>(entity =>
+        {
+            entity.ToTable("tbl_file");
+            entity.Property(e => e.File).HasMaxLength(1000000000);
+        });
+
+        modelBuilder.Entity<TblFileDetail>(entity =>
+        {
+            entity.ToTable("tbl_file_detail");
+            entity.Property(e => e.Type)
+                .HasColumnType("file_type");
+            entity.Property(e => e.Name).HasMaxLength(50);
+            entity.HasOne(d => d.FileActual).WithMany(p => p.Actuals)
+                .HasForeignKey(d => d.Actual)
+                .OnDelete(DeleteBehavior.NoAction);
+            entity.HasOne(d => d.FilePreview).WithMany(p => p.Previews)
+                .HasForeignKey(d => d.Preview)
+                .OnDelete(DeleteBehavior.NoAction);
         });
     }
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);

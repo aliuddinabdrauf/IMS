@@ -21,8 +21,10 @@ public partial class TblUser:TblBase
     public UserRole[] Roles { get; set; } = [];
     public UserStatus Status { get; set; }
     public AccountType Type { get; set; }
+    public Guid? ProfilePicture {get ;set;}
     public TblStudent? Student { get; set; }
     public TblStaff? Staff { get; set; }
     public virtual ICollection<TblResetPassword> ResetPasswords { get; set; } = [];
     public virtual ICollection<TblLoginSession> LoginSessions { get; set; } = [];
+    public virtual TblFileDetail? ProfilePitcureFile { get; set;}
 }

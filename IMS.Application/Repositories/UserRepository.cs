@@ -19,6 +19,7 @@ public interface IUserRepository
     Task<UserDto> GetUserForLogin(LoginDto login);
     Task<UserDto> GetUserActiveById(Guid id);
     void UpdatePasswordHashAndSalt(ResetUserPasswordDto resetUserPasswordDto);
+    Task<Guid> GetUserProfilePictureId(Guid userId);
 }
 
 public class UserRepository(ImsContext context, IStringLocalizer<GlobalResource> stringLocalizer, IMemoryCache memoryCache) : IUserRepository
@@ -29,7 +30,7 @@ public class UserRepository(ImsContext context, IStringLocalizer<GlobalResource>
 
     public async Task<UserDto> GetUserByEmailAddress(string emailAddress)
     {
-        var user = await _context.TblUsers.SingleOrDefaultAsync(o => o.EmailAddress == emailAddress.ToLowerInvariant());
+        var user = await _context.TblUsers.AsNoTracking().SingleOrDefaultAsync(o => o.EmailAddress == emailAddress.ToLowerInvariant());
         if (user == null) throw new RecordNotFoundException(_stringLocalizer["RecordNotFound"]);
         return user.Adapt<UserDto>();
     }
@@ -44,7 +45,7 @@ public class UserRepository(ImsContext context, IStringLocalizer<GlobalResource>
     {
         if (!_memoryCache.TryGetValue(id, out UserDto? cache) || cache == null)
         {
-            var user = await _context.TblUsers.SingleOrDefaultAsync(o => o.Id == id && o.Status == UserStatus.Active);
+            var user = await _context.TblUsers.AsNoTracking().SingleOrDefaultAsync(o => o.Id == id && o.Status == UserStatus.Active);
             if (user == null) throw new RecordNotFoundException(_stringLocalizer["RecordNotFound"]);
             var result = user.Adapt<UserDto>();
             _memoryCache.Set(id, result, TimeSpan.FromMinutes(10));
@@ -66,6 +67,13 @@ public class UserRepository(ImsContext context, IStringLocalizer<GlobalResource>
         var ent = context.TblUsers.Attach(toSave);
         toSave.Status = UserStatus.Active;
         ent.PrepareUpdate(nameof(toSave.PasswordHash),nameof(toSave.PasswordSalt));
+    }
+
+    public async Task<Guid> GetUserProfilePictureId(Guid userId)
+    {
+        var result = await _context.TblUsers.AsNoTracking().Where(o => o.Id == userId).Select(o => o.ProfilePicture).SingleOrDefaultAsync()
+         ?? throw new RecordNotFoundException(_stringLocalizer["RecordNotFound"]);
+         return result;
     }
 
     public async Task<List<UserDto>> GetUserNotSendEmailVerification()

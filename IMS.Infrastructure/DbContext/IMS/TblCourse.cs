@@ -14,6 +14,6 @@ public partial class TblCourse:TblBase
     public string? Description { get; set; }
     public Guid FacultyId { get; set; }
     public virtual TblFaculty Faculty { get; set; } = null!;
-    public virtual ICollection<TblStudentCourse> StudentCourses { get; } = [];
+    public virtual ICollection<TblStudentCourse> StudentCourses { get; set; } = [];
 
 }

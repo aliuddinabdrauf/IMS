@@ -123,12 +123,19 @@ public class AuthenticationService(IStringLocalizer<GlobalResource> globalResour
             var key = Encoding.ASCII.GetBytes(_jwtSettings.Secret);
             var tokenDescriptor = new SecurityTokenDescriptor
             {
-                Subject = new ClaimsIdentity(new[] { new Claim("userId", user.Id.ToString()!) }),
+                Subject = new ClaimsIdentity(new[] { new Claim("userId", user.Id.ToString()!), 
+                new Claim("accountType", user.Type.GetHashCode().ToString(), ClaimValueTypes.Integer),
+                new Claim("emailAddress", user.EmailAddress),
+                new Claim("name", user.Name) }),
                 Expires = DateTime.UtcNow.AddDays(_jwtSettings.TokenValidity),
                 Issuer = _jwtSettings.Issuer,
                 Audience = _jwtSettings.Audience,
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
+            foreach (var role in user.Roles)
+            {
+                tokenDescriptor.Subject.AddClaim(new Claim(type:"userRole", role.GetHashCode().ToString(), ClaimValueTypes.Integer));
+            }
             var sessionId = await CreateLoginSession(user.Id.GetValueOrDefault(), tokenDescriptor);
             tokenDescriptor.Subject.AddClaim(new Claim(type:"sessionId", sessionId.Id.ToString()!));
             return tokenHandler.CreateToken(tokenDescriptor);

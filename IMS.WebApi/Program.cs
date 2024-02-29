@@ -99,6 +99,7 @@ dataSourceBuilder.MapEnum<UserRole>();
 dataSourceBuilder.MapEnum<UserStatus>();
 dataSourceBuilder.MapEnum<AccountType>();
 dataSourceBuilder.MapEnum<UserGender>();
+dataSourceBuilder.MapEnum<FileType>();
 var dataSource = dataSourceBuilder.Build();
 builder.Services.AddDbContext<ImsContext>(options =>
 {
@@ -122,6 +123,8 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.UseAuthentication();
+
+app.UseRouting();
 
 app.UseMiddleware<ErrorHandlingMiddleware>();
 

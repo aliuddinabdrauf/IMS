@@ -22,8 +22,7 @@ public partial class TblStudent:TblBase
     [Required]
     public UserGender Gender { get; set; }
     [Length(minimumLength:0, maximumLength:100000)]
-    public byte[]? ProfilePicture { get; set; }
     public Guid UserId { get; set; }
     public TblUser User { get; set; } = null!;
-    public virtual ICollection<TblStudentCourse> StudentCourses { get; } = [];
+    public virtual ICollection<TblStudentCourse> StudentCourses { get; set; } = [];
 }

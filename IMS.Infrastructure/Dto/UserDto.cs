@@ -10,15 +10,16 @@ public class UserDto{
     public Guid? Id { get; set; }
     public Guid? ByAccountTypeId { get; set; }
     public string EmailAddress { get; set; } = null!;
+    public string Name {get ;set;} = null!;
     public UserRole[] Roles { get; set; } = null!;
     public UserStatus Status { get; set; }
     public AccountType Type { get; set; }
+    public Guid? ProfilePicture {get ;set;}
     [JsonIgnore]
     public string? PasswordHash { get; set; }
     [JsonIgnore]
     public string? PasswordSalt { get; set; }
 }
-
 public class UserAfterLoginDto : UserDto
 {
     public string Name { get; set; } = null!;

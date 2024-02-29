@@ -9,6 +9,7 @@ public interface IUserService
 {
     Task<StudentDto> CreateUserAsStudent(CreateUserAsStudentDto studentUser);
     Task RetrieveByAccountTypeId(UserDto user);
+    Task<Guid> GetUserProfilePictureId(Guid userId);
 }
 
 public class UserService(IUnitOfWork unitOfWork, IAuthenticationService authenticationService, IEmailService emailService) : IUserService
@@ -39,11 +40,16 @@ public class UserService(IUnitOfWork unitOfWork, IAuthenticationService authenti
     {
         if (user.Type == AccountType.Student)
         {
-            user.ByAccountTypeId = await _unitOfWork.StudentRepository.GetStudentIdByUserId(user.Id.GetValueOrDefault());
+            (user.ByAccountTypeId, user.Name) = await _unitOfWork.StudentRepository.GetStudentIdAndNameByUserId(user.Id.GetValueOrDefault());
         }
         else
         {
             throw new NotImplementedException();
         }
+    }
+    
+    public async Task<Guid> GetUserProfilePictureId(Guid userId)
+    {
+        return await _unitOfWork.UserRepository.GetUserProfilePictureId(userId);
     }
 }

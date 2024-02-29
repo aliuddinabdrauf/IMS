@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using IMS.Application.Attributes;
 using IMS.Application.Services;
 using IMS.Infrastructure;
 using IMS.Infrastructure.Dto;
@@ -6,6 +7,7 @@ using IMS.Infrastructure.Util;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
+using AuthorizeAttribute = IMS.Application.Attributes.AuthorizeAttribute;
 
 namespace IMS.WebApi.Controllers;
 [ApiController]
@@ -17,6 +19,7 @@ public class AuthenticateController(IAuthenticationService authenticationService
     private readonly IAuthenticationService _authenticationService = authenticationService;
     private readonly IUserService _userService = userService;
     [HttpGet]
+    [Authorize]
     [Route("resetpassword/request")]
     public async Task<IActionResult> ResetPasswordRequest([EmailAddress][Required]string emailAddress)
     {
@@ -66,9 +69,9 @@ public class AuthenticateController(IAuthenticationService authenticationService
             var user = await _authenticationService.Login(login);
             await _userService.RetrieveByAccountTypeId(user);
             var jwtToken = await _authenticationService.GenerateJwtToken(user);
-            return Ok(new SuccessLoginDto(jwtToken, user));
+            return Ok(new ResponseDto(new SuccessLoginDto(jwtToken, user)));
         }
-        catch (RecordNotFoundException e)
+        catch (RecordNotFoundException)
         {
             throw new ActionNotValidException(_localizer["EmailOrPasswordNotValid"]);
         }

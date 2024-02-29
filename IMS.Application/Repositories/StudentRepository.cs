@@ -14,7 +14,7 @@ public interface IStudentRepository
     Task MapStudentToCourses(Guid studentId, Guid[] courseIds);
     Task<StudentComprehensiveDetailsDto> GetStudentDetailsById(Guid id);
     Task<StudentDto> GetStudentByUserId(Guid userId);
-    Task<Guid> GetStudentIdByUserId(Guid userId);
+    Task<(Guid, string)> GetStudentIdAndNameByUserId(Guid userId);
 }
 
 public class StudentRepository(ImsContext context, IStringLocalizer<GlobalResource> globalResource) : IStudentRepository
@@ -30,12 +30,11 @@ public class StudentRepository(ImsContext context, IStringLocalizer<GlobalResour
         return result.Adapt<StudentDto>();
     }
     
-    public async Task<Guid> GetStudentIdByUserId(Guid userId)
+    public async Task<(Guid, string)> GetStudentIdAndNameByUserId(Guid userId)
     {
-        var result = await _context.TblStudents.Select(o => new{o.UserId, o.Id}).SingleOrDefaultAsync(o => o.UserId == userId);
-        if (result == null)
-            throw new RecordNotFoundException(_stringLocalizer["RecordNotFound"]);
-        return result.Id;
+        var result = await _context.TblStudents.Where(o => o.UserId == userId).Select(o => new{o.Name, o.Id}).SingleOrDefaultAsync() ??
+        throw new RecordNotFoundException(_stringLocalizer["RecordNotFound"]);
+        return (result.Id, result.Name);
     }
     public async Task<StudentDto> CreateStudent(StudentDto student)
     {
